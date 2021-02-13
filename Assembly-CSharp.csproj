@@ -75,7 +75,10 @@
     <Compile Include="Assets\SampleScenes\Scripts\ParticleSceneControls.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\SlowMoButton.cs" />
+    <Compile Include="Assets\Scripts\CameraShake.cs" />
+    <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
+    <Compile Include="Assets\Scripts\Tree.cs" />
     <Compile Include="Assets\Tutorial_Info\Scripts\Readme.cs" />
     <None Include="Assets\ExampleAssets\IL3DN\Shaders\IL3DN_Pine.shader" />
     <None Include="Assets\SampleScenes\Shaders\Skybox-Procedural.shader" />
