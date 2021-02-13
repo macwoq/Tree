@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour
     CharacterController character;
 
     [Header("PlayerWalk")]
-    public float walkSpeed = 5f;    
+
+    public float walkSpeed = 5f, gravity = 5f;
     Vector3 moveInput;
 
     [Header("PlayerLook")]
@@ -42,8 +43,9 @@ public class PlayerController : MonoBehaviour
         {
             Cutting();
         }
-       
 
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
        
 
         Walking();
@@ -78,11 +80,7 @@ public class PlayerController : MonoBehaviour
         {
             mouseInput.y = -mouseInput.y;
         }
-
-
-
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + mouseInput.x, transform.rotation.eulerAngles.z);
-
         cameraTransform.rotation = Quaternion.Euler(cameraTransform.rotation.eulerAngles + new Vector3(mouseInput.y,0,0));
     }
 
@@ -91,10 +89,20 @@ public class PlayerController : MonoBehaviour
         //moveInput.x = Input.GetAxis("Horizontal") * walkSpeed;
         //moveInput.z = Input.GetAxis("Vertical") * walkSpeed;
 
+        float y = moveInput.y;
+
         Vector3 vertivalMove = transform.forward * Input.GetAxis("Vertical");
-        moveInput = vertivalMove * walkSpeed * Time.deltaTime;
+        Vector3 horzontalMove = transform.right * Input.GetAxis("Horizontal");
 
 
-        character.Move(moveInput);
+        moveInput = vertivalMove + horzontalMove;
+        moveInput.Normalize();
+        moveInput = moveInput * walkSpeed;
+
+        moveInput.y = y;
+
+        moveInput.y += Physics.gravity.y * gravity;
+
+        character.Move(moveInput * Time.deltaTime);
     }
 }

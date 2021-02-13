@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tree : MonoBehaviour
 {
@@ -8,6 +9,12 @@ public class Tree : MonoBehaviour
     Rigidbody rb;
     [SerializeField] Transform spawner;
     [SerializeField] GameObject treePrefab;
+    //spawn new tree in same place?
+    public bool spawnNew;
+    //Destroy cutted tree before spawn new?
+    public bool destroyBeforeSpawn;
+    //on-screen icon of tree range
+    [SerializeField] Image treeInfo;
 
     private void Start()
     {
@@ -19,6 +26,7 @@ public class Tree : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             inRange = true;
+            treeInfo.color = Color.green;
         }
     }
     private void OnTriggerStay(Collider other)
@@ -26,6 +34,7 @@ public class Tree : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             inRange = true;
+            treeInfo.color = Color.green;
         }
     }
 
@@ -34,6 +43,7 @@ public class Tree : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             inRange = false;
+            treeInfo.color = Color.red;
         }
     }
 
@@ -46,10 +56,20 @@ public class Tree : MonoBehaviour
     {
         rb = GameObject.FindGameObjectWithTag("Tree").GetComponent<Rigidbody>();
         rb.isKinematic = false;
-        rb.gameObject.name = "..";
+        rb.gameObject.name = "cutted";
         rb.gameObject.tag = "Untagged";
         yield return new WaitForSeconds(7);
-
-        Instantiate(treePrefab, spawner.position, Quaternion.identity);
+        if (destroyBeforeSpawn)
+        {
+            Destroy(GameObject.Find("cutted"));
+        }
+        if (spawnNew)
+        {
+            Instantiate(treePrefab, spawner.position, Quaternion.identity);
+        }
+        else
+        {
+            print("Done");
+        }
     }
 }
