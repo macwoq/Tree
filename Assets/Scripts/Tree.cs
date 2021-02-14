@@ -58,11 +58,12 @@ public class Tree : MonoBehaviour
         rb.isKinematic = false;
         rb.gameObject.name = "cutted";
         rb.gameObject.tag = "Untagged";
-        yield return new WaitForSeconds(7);
-        if (destroyBeforeSpawn)
-        {
-            Destroy(GameObject.Find("cutted"));
-        }
+        yield return new WaitForSeconds(5);
+        GameObject.Find("cutted").GetComponent<Collider>().enabled = false;
+        yield return new WaitForSeconds(2);
+        
+        Destroy(GameObject.Find("cutted"));
+        
         if (spawnNew)
         {
             Instantiate(treePrefab, spawner.position, Quaternion.identity);
@@ -71,5 +72,7 @@ public class Tree : MonoBehaviour
         {
             print("Done");
         }
+
+        
     }
 }
